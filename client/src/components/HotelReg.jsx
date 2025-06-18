@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { assets, cities } from "../assets/assets";
 
 const HotelReg = () => {
-    const { setShowHotelReg, axios, getToken, setIsOwner } = useAppContext();
+    const { setShowHotelReg, axios, getToken, user, setIsOwner } = useAppContext();
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -18,7 +18,7 @@ const HotelReg = () => {
             const token = await getToken();
             console.log("Token:", token);
 
-            const { data } = await axios.post(`/api/hotels/`, { name, contact, address, city }, { headers: { Authorization: `Bearer ${await getToken()}` } });
+            const { data } = await axios.post(`/api/hotels/`, { name, contact, address, city }, { headers: { Authorization: `Bearer ${user.id}` } });
 
             if (data.success) {
                 toast.success(data.message);
